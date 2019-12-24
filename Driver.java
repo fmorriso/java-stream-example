@@ -52,11 +52,11 @@ public class Driver
 
 	public static int[] generateRandomIntArray(int size, int min, int max)
 	{
-		int[] values = new int[size];
 		Random r = new Random();
 		// generate random whole numbers as an IntStream and convert to int[]
-		values = r.ints(size, min, max + 1)
-				  .toArray();
+		// using IntStream.toArray()
+		int[] values = r.ints(size, min, max + 1)
+				        .toArray();
 		return values;
 	}
 	
