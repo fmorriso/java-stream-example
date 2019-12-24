@@ -49,12 +49,18 @@ public class Driver
 		return values;
 	}
 	
-	public static Integer[] generateRandomIntegerArray(int size, int min, int max) {
-		Integer[] values = new Integer[size];
+	public static Integer[] generateRandomIntegerArray(int n, int min, int max) {
+		Integer[] values = new Integer[n];
 		Random r = new Random();
-		//TODO: combine the following lines into a single line
-		IntStream temp1 = r.ints(size, min, max + 1);
-		values = temp1.boxed().toArray(Integer[]::new);
+		
+		// 1. Generate n random whole numbers
+		// 2. convert the resulting IntStream to Stream<Integer>
+		// 3. convert the Stream<Integer> to Integer[]
+		// IntStream -> Stream<Integer> -> Integer[];		
+		values = r.ints(n, min, max + 1)
+				  .boxed()
+				  .toArray(Integer[]::new);
+		
 		return values;
 	}
 
