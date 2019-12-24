@@ -25,6 +25,8 @@ public class Driver
 		
 		// generate Integer[] array so we can use Stream and Tee in a single (logical) pass over it.
 		// to find the smallest and largest value.
+		// NOTE: The switch from int[] to Integer[] is forced by java due to limits on what Stream, Tee and Collect
+		// can work with.
 		Integer[] values2 = generateRandomIntegerArray(NUM_VALUES, MIN, MAX);
 		System.out.println(Arrays.toString(values2));
 		// Find minimum and maximum values by making a single pass over an Integer[] array and create a special class to hold the result
@@ -43,10 +45,28 @@ public class Driver
 		
 		List<Integer> values3 = generateRandomIntegerList(NUM_VALUES, MIN, MAX);
 		System.out.println(values3);
+		largest = values3.stream()
+				         .max(Comparator.naturalOrder())
+				         .get()
+				         .intValue();
+		smallest = values3.stream()
+				          .min(Comparator.naturalOrder())
+				          .get()
+				          .intValue();
+		System.out.format("3. smallest value = %d, largest value = %d%n", smallest, largest);
 		//TODO: figure out how to get smallest and largest from above list using Collectors.teeing
 		
 		List<Integer> values4 = generateRandomIntegerListExplicitCollector(NUM_VALUES, MIN, MAX);
 		System.out.println(values4);
+		largest = values4.stream()
+		                 .max(Comparator.naturalOrder())
+		                 .get()
+		                 .intValue();
+        smallest = values4.stream()
+		                  .min(Comparator.naturalOrder())
+		                  .get()
+		                  .intValue();
+        System.out.format("4. smallest value = %d, largest value = %d%n", smallest, largest);
 		//TODO: figure out how to get smallest and largest from above list using Collectors.teeing
 	}
 
