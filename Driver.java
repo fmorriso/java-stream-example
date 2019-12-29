@@ -1,11 +1,15 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.DoubleSummaryStatistics;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -54,7 +58,13 @@ public class Driver
 				          .get()
 				          .intValue();
 		System.out.format("3. smallest value = %d, largest value = %d%n", smallest, largest);
-		//TODO: figure out how to get smallest and largest from above list using Collectors.teeing
+		
+		// Get min/max in single pass using special built-in statistics class
+		IntSummaryStatistics temp4 = values3.stream()
+				                            .collect(IntSummaryStatistics::new, IntSummaryStatistics::accept, IntSummaryStatistics::combine);
+		smallest = temp4.getMin();
+		largest = temp4.getMax();
+		System.out.format("4. smallest value = %d, largest value = %d%n", smallest, largest);
 		
 		List<Integer> values4 = generateRandomIntegerListExplicitCollector(NUM_VALUES, MIN, MAX);
 		System.out.println(values4);
@@ -66,8 +76,8 @@ public class Driver
 		                  .min(Comparator.naturalOrder())
 		                  .get()
 		                  .intValue();
-        System.out.format("4. smallest value = %d, largest value = %d%n", smallest, largest);
-		//TODO: figure out how to get smallest and largest from above list using Collectors.teeing
+        System.out.format("5. smallest value = %d, largest value = %d%n", smallest, largest);
+		//TODO: figure out how to get smallest and largest from above list in a single pass over a single stream
 	}
 
 	public static int[] generateRandomIntArray(int size, int min, int max)
