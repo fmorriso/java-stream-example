@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.DoubleSummaryStatistics;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Optional;
@@ -13,12 +14,12 @@ public class Driver
 
 	public static void main(String[] args)
 	{
-		final int NUM_VALUES = 25, MIN = 50, MAX = 100;
+		final int NUM_VALUES = 1000, MIN = 50, MAX = 100;
 		int smallest, largest;
-		double average;
+		double average, smallestDouble, largestDouble;
 		
 		int[] values1 = generateRandomIntArray(NUM_VALUES, MIN, MAX);
-		System.out.println(Arrays.toString(values1));
+		// System.out.println(Arrays.toString(values1));
 
 		// multiple passes over the same int array of values to find smallest and largest value
 		largest = Arrays.stream(values1).max().getAsInt();
@@ -30,7 +31,7 @@ public class Driver
 		// NOTE: The switch from int[] to Integer[] is forced by java due to limits on what Stream, Tee and Collect
 		// can work with.
 		Integer[] values2 = generateRandomIntegerArray(NUM_VALUES, MIN, MAX);
-		System.out.println(Arrays.toString(values2));
+		// System.out.println(Arrays.toString(values2));
 		// Find minimum and maximum values by making a single pass over an Integer[] array and create a special class to hold the result
 		MinMax minmax = Stream.of(values2)
 				.collect(
@@ -46,7 +47,7 @@ public class Driver
 		System.out.format("2. smallest value = %d, largest value = %d%n", smallest, largest);
 		
 		List<Integer> values3 = generateRandomIntegerList(NUM_VALUES, MIN, MAX);
-		System.out.println(values3);
+		// System.out.println(values3);
 		largest = values3.stream()
 				         .max(Comparator.naturalOrder())
 				         .get()
@@ -66,7 +67,7 @@ public class Driver
 		System.out.format("4. smallest value = %d, largest value = %d, average = %.1f%n", smallest, largest, average);
 		
 		List<Integer> values4 = generateRandomIntegerListExplicitCollector(NUM_VALUES, MIN, MAX);
-		System.out.println(values4);
+		// System.out.println(values4);
 		largest = values4.stream()
 		                 .max(Comparator.naturalOrder()) //  -> Optional<Integer>
 		                 .get() // -> Integer
@@ -84,6 +85,16 @@ public class Driver
         largest = stats4.getMax();
         average = stats4.getAverage();
         System.out.format("6. smallest value = %d, largest value = %d, average = %.1f%n", smallest, largest, average);
+        
+        double[] values5 = generateRandomDoubleArray(NUM_VALUES, MIN, MAX);
+        // System.out.println(Arrays.toString(values5));
+        DoubleSummaryStatistics stats5 = Arrays.stream(values5)
+        		.collect(DoubleSummaryStatistics::new, DoubleSummaryStatistics::accept, DoubleSummaryStatistics::combine);
+        smallestDouble = stats5.getMin();
+        largestDouble = stats5.getMax();
+        average = stats5.getAverage();
+        System.out.format("7. smallest value = %.3f, largest value = %.3f, average = %.1f%n", smallestDouble, largestDouble, average);
+        
 	}
 
 	/**
@@ -98,6 +109,7 @@ public class Driver
 	public static int[] generateRandomIntArray(int n, int min, int max)
 	{
 		Random r = new Random();
+		
 		// NOTE: the ints() upper level bound is exclusive, which is why we have to add 1 when invoking it.
 		int[] values = r.ints(n, min, max + 1)
 				        .toArray();
@@ -115,7 +127,8 @@ public class Driver
 	 * @return - an array of Integers
 	 */
 	public static Integer[] generateRandomIntegerArray(int n, int min, int max) {
-		Random r = new Random();		
+		Random r = new Random();	
+		
 		// NOTE: the ints() upper level bound is exclusive, which is why we have to add 1 when invoking it.
 		Integer []values = r.ints(n, min, max + 1)
 				            .boxed()
@@ -160,6 +173,26 @@ public class Driver
 		// NOTE: the ints() upper level bound is exclusive, which is why we have to add 1 when invoking it.
 		List<Integer> values = r.ints(n, min, max + 1)
 				                .collect(ArrayList<Integer>::new, ArrayList::add, ArrayList::addAll);
+		return values;
+	}
+	
+	/**
+	 * 1. Generate n random decimal numbers as a DoubleStream using built-in .doubles() feature of Random
+	 * 2. Convert DoubleStream to doubles[] using DoubleStream.toArray()
+	 * 
+	 * @param n - the number of values to generate
+	 * @param min - the minimum value to generate
+	 * @param max - the maximum value to generate
+	 * @return - an array of doubles
+	 */
+	public static double[] generateRandomDoubleArray(int n, double min, double max) {
+		
+		Random r = new Random();
+		
+		// NOTE: Random.doubles() upper level bound is exclusive
+		double[] values = r.doubles(n, min, max)
+				           .toArray();
+		
 		return values;
 	}
 
