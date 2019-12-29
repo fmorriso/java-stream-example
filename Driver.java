@@ -78,14 +78,28 @@ public class Driver
 		                  .get()
 		                  .intValue();
         System.out.format("5. smallest value = %d, largest value = %d%n", smallest, largest);
-		//TODO: figure out how to get smallest and largest from above list in a single pass over a single stream
+		
+        IntSummaryStatistics stats4 = values4.stream()
+                                             .collect(IntSummaryStatistics::new, IntSummaryStatistics::accept, IntSummaryStatistics::combine);
+        smallest = stats4.getMin();
+        largest = stats4.getMax();
+        average = stats4.getAverage();
+        System.out.format("6. smallest value = %d, largest value = %d, average = %.1f%n", smallest, largest, average);
 	}
 
+	/**
+	 * 1. Generate n random whole numbers as an IntStream using built-in feature of Random
+	 * 2. Convert IntStream to int[] using IntStream.toArray()
+	 * 
+	 * @param size - the number of values to generate
+	 * @param min - the minimum value to generate
+	 * @param max - the maximum value to generate
+	 * @return - an array of integers
+	 */
 	public static int[] generateRandomIntArray(int size, int min, int max)
 	{
 		Random r = new Random();
-		// 1. Generate n random whole numbers as an IntStream using built-in feature of Random
-		// 2. Convert IntStream to int[] using IntStream.toArray()
+		// NOTE: the ints() upper level bound is exclusive, which is why we have to add 1 when invoking it.
 		int[] values = r.ints(size, min, max + 1)
 				        .toArray();
 		return values;
