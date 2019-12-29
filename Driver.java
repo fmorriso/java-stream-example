@@ -33,12 +33,12 @@ public class Driver
 		Integer[] values2 = generateRandomIntegerArray(NUM_VALUES, MIN, MAX);
 		// System.out.println(Arrays.toString(values2));
 		// Find minimum and maximum values by making a single pass over an Integer[] array and create a special class to hold the result
-		MinMax minmax = Stream.of(values2)
-				.collect(
-						Collectors.teeing(
-								Collectors.minBy(Comparator.naturalOrder()),
-								Collectors.maxBy(Comparator.naturalOrder()),
-								(Optional<Integer> a, Optional<Integer> b) -> new MinMax(a.orElse(Integer.MIN_VALUE), b.orElse(Integer.MAX_VALUE))));
+		MinMax minmax = Stream	.of(values2)
+								.collect(
+										Collectors.teeing(
+												Collectors.minBy(Comparator.naturalOrder()),
+												Collectors.maxBy(Comparator.naturalOrder()),
+												(Optional<Integer> a, Optional<Integer> b) -> new MinMax(a.orElse(Integer.MIN_VALUE), b.orElse(Integer.MAX_VALUE))));
 
 		largestWholeNumber = minmax.getMax().intValue();
 		smallestWholeNumber = minmax.getMin().intValue();
@@ -47,18 +47,18 @@ public class Driver
 		List<Integer> values3 = generateRandomIntegerList(NUM_VALUES, MIN, MAX);
 		// System.out.println(values3);
 		largestWholeNumber = values3.stream()
-				.max(Comparator.naturalOrder())
-				.get()
-				.intValue();
-		smallestWholeNumber = values3.stream()
-				.min(Comparator.naturalOrder())
-				.get()
-				.intValue();
+									.max(Comparator.naturalOrder())
+									.get()
+									.intValue();
+		smallestWholeNumber = values3	.stream()
+										.min(Comparator.naturalOrder())
+										.get()
+										.intValue();
 		System.out.format("3. smallest value = %d, largest value = %d%n", smallestWholeNumber, largestWholeNumber);
 
 		// Get min/max in single pass using special built-in statistics class
-		IntSummaryStatistics stats3 = values3.stream()
-				.collect(IntSummaryStatistics::new, IntSummaryStatistics::accept, IntSummaryStatistics::combine);
+		IntSummaryStatistics stats3 = values3	.stream()
+												.collect(IntSummaryStatistics::new, IntSummaryStatistics::accept, IntSummaryStatistics::combine);
 		smallestWholeNumber = stats3.getMin();
 		largestWholeNumber = stats3.getMax();
 		average = stats3.getAverage();
@@ -67,18 +67,18 @@ public class Driver
 		List<Integer> values4 = generateRandomIntegerListExplicitCollector(NUM_VALUES, MIN, MAX);
 		// System.out.println(values4);
 		largestWholeNumber = values4.stream()
-				.max(Comparator.naturalOrder()) //  -> Optional<Integer>
-				.get() // -> Integer
-				.intValue(); // int
-		smallestWholeNumber = values4.stream()
-				.min(Comparator.naturalOrder()) //  -> Optional<Integer>
-				.get() // Integer
-				.intValue(); // int
+									.max(Comparator.naturalOrder()) //  -> Optional<Integer>
+									.get() // -> Integer
+									.intValue(); // int
+		smallestWholeNumber = values4	.stream()
+										.min(Comparator.naturalOrder()) //  -> Optional<Integer>
+										.get() // Integer
+										.intValue(); // int
 		System.out.format("5. smallest value = %d, largest value = %d%n", smallestWholeNumber, largestWholeNumber);
 
 		// use Stream.collect(supplier, accumulator, combiner) to gather statistics on the values
-		IntSummaryStatistics stats4 = values4.stream()
-				.collect(IntSummaryStatistics::new, IntSummaryStatistics::accept, IntSummaryStatistics::combine);
+		IntSummaryStatistics stats4 = values4	.stream()
+												.collect(IntSummaryStatistics::new, IntSummaryStatistics::accept, IntSummaryStatistics::combine);
 		smallestWholeNumber = stats4.getMin();
 		largestWholeNumber = stats4.getMax();
 		average = stats4.getAverage();
@@ -86,22 +86,22 @@ public class Driver
 
 		double[] values5 = generateRandomDoubleArray(NUM_VALUES, MIN, MAX);
 		// System.out.println(Arrays.toString(values5));
-		DoubleSummaryStatistics stats5 = Arrays.stream(values5)
-				.collect(DoubleSummaryStatistics::new, DoubleSummaryStatistics::accept, DoubleSummaryStatistics::combine);
+		DoubleSummaryStatistics stats5 = Arrays	.stream(values5)
+												.collect(DoubleSummaryStatistics::new, DoubleSummaryStatistics::accept, DoubleSummaryStatistics::combine);
 		smallestDecimalNumber = stats5.getMin();
 		largestDecimalNumber = stats5.getMax();
 		average = stats5.getAverage();
 		System.out.format("7. smallest value = %.3f, largest value = %.3f, average = %.3f%n", smallestDecimalNumber, largestDecimalNumber, average);
-		
+
 		Double[] values6 = generateRandomBoxedDoubleArray(NUM_VALUES, MIN, MAX);
 		// use Stream.collect(supplier, accumulator, combiner) to gather statistics on the values
-		DoubleSummaryStatistics stats6 = Arrays.stream(values6)
-				.collect(DoubleSummaryStatistics::new, DoubleSummaryStatistics::accept, DoubleSummaryStatistics::combine);
+		DoubleSummaryStatistics stats6 = Arrays	.stream(values6)
+												.collect(DoubleSummaryStatistics::new, DoubleSummaryStatistics::accept, DoubleSummaryStatistics::combine);
 		smallestDecimalNumber = stats6.getMin();
 		largestDecimalNumber = stats6.getMax();
 		average = stats6.getAverage();
 		System.out.format("8. smallest value = %.3f, largest value = %.3f, average = %.3f%n", smallestDecimalNumber, largestDecimalNumber, average);
-		
+
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class Driver
 
 		// NOTE: the ints() upper level bound is exclusive, which is why we have to add 1 when invoking it.
 		int[] values = r.ints(n, min, max + 1)
-				.toArray();
+						.toArray();
 		return values;
 	}
 
@@ -143,8 +143,8 @@ public class Driver
 
 		// NOTE: the ints() upper level bound is exclusive, which is why we have to add 1 when invoking it.
 		Integer[] values = r.ints(n, min, max + 1)
-				.boxed()
-				.toArray(Integer[]::new);
+							.boxed()
+							.toArray(Integer[]::new);
 
 		return values;
 	}
@@ -167,8 +167,8 @@ public class Driver
 
 		// NOTE: the ints() upper level bound is exclusive, which is why we have to add 1 when invoking it.
 		List<Integer> values = r.ints(n, min, max + 1)
-				.boxed()
-				.collect(Collectors.toList());
+								.boxed()
+								.collect(Collectors.toList());
 
 		return values;
 	}
@@ -191,7 +191,7 @@ public class Driver
 
 		// NOTE: the ints() upper level bound is exclusive, which is why we have to add 1 when invoking it.
 		List<Integer> values = r.ints(n, min, max + 1)
-				.collect(ArrayList<Integer>::new, ArrayList::add, ArrayList::addAll);
+								.collect(ArrayList<Integer>::new, ArrayList::add, ArrayList::addAll);
 		return values;
 	}
 
@@ -214,8 +214,8 @@ public class Driver
 		Random r = new Random();
 
 		// NOTE: Random.doubles() upper level bound is exclusive
-		double[] values = r.doubles(n, min, max)
-				.toArray();
+		double[] values = r	.doubles(n, min, max)
+							.toArray();
 
 		return values;
 	}
@@ -241,9 +241,9 @@ public class Driver
 		Random r = new Random();
 
 		// NOTE: Random.doubles() upper level bound is exclusive
-		Double[] values = r.doubles(n, min, max)
-				.boxed()
-				.toArray(Double[]::new);
+		Double[] values = r	.doubles(n, min, max)
+							.boxed()
+							.toArray(Double[]::new);
 
 		return values;
 	}
