@@ -125,11 +125,19 @@ public class Driver
 		return values;
 	}
 	
+	/**
+	 * 1. Generate n random whole numbers as an IntStream using built-in feature of Random
+	 * 2. convert the IntStream coming out of r.ints to a Stream<Integer) via boxed()
+	 * 3. convert Stream<Integer> to a List<Integer> using a built-in collector
+	 * 
+	 * @param n - the number of values to generate
+	 * @param min - the minimum value to generate
+	 * @param max - the maximum value to generate
+	 * @return
+	 */
 	public static List<Integer> generateRandomIntegerList(int n, int min, int max) {	
 		Random r = new Random();
-		// 1. Generate n random whole numbers as an IntStream using built-in feature of Random
-		// 2. convert the IntStream coming out of r.ints to a Stream<Integer) via boxed()
-		// 3. convert Stream<Integer> to a List<Integer> using a built-in collector
+
 		List<Integer> values = r.ints(n, min, max + 1)
 				                .boxed()				
 				                .collect(Collectors.toList());
