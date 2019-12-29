@@ -76,7 +76,7 @@ public class Driver
 				.intValue(); // int
 		System.out.format("5. smallest value = %d, largest value = %d%n", smallest, largest);
 
-		// use .collect(supplier, accumulator, combiner) to gather statistics on the values
+		// use Stream.collect(supplier, accumulator, combiner) to gather statistics on the values
 		IntSummaryStatistics stats4 = values4.stream()
 				.collect(IntSummaryStatistics::new, IntSummaryStatistics::accept, IntSummaryStatistics::combine);
 		smallest = stats4.getMin();
@@ -94,6 +94,7 @@ public class Driver
 		System.out.format("7. smallest value = %.3f, largest value = %.3f, average = %.3f%n", smallestDouble, largestDouble, average);
 		
 		Double[] values6 = generateRandomBoxedDoubleArray(NUM_VALUES, MIN, MAX);
+		// use Stream.collect(supplier, accumulator, combiner) to gather statistics on the values
 		DoubleSummaryStatistics stats6 = Arrays.stream(values6)
 				.collect(DoubleSummaryStatistics::new, DoubleSummaryStatistics::accept, DoubleSummaryStatistics::combine);
 		smallestDouble = stats6.getMin();
