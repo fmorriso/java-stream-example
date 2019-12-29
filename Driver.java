@@ -91,8 +91,16 @@ public class Driver
 		smallestDouble = stats5.getMin();
 		largestDouble = stats5.getMax();
 		average = stats5.getAverage();
-		System.out.format("7. smallest value = %.3f, largest value = %.3f, average = %.1f%n", smallestDouble, largestDouble, average);
-
+		System.out.format("7. smallest value = %.3f, largest value = %.3f, average = %.3f%n", smallestDouble, largestDouble, average);
+		
+		Double[] values6 = generateRandomBoxedDoubleArray(NUM_VALUES, MIN, MAX);
+		DoubleSummaryStatistics stats6 = Arrays.stream(values6)
+				.collect(DoubleSummaryStatistics::new, DoubleSummaryStatistics::accept, DoubleSummaryStatistics::combine);
+		smallestDouble = stats6.getMin();
+		largestDouble = stats6.getMax();
+		average = stats6.getAverage();
+		System.out.format("8. smallest value = %.3f, largest value = %.3f, average = %.3f%n", smallestDouble, largestDouble, average);
+		
 	}
 
 	/**
@@ -179,7 +187,7 @@ public class Driver
 	public static List<Integer> generateRandomIntegerListExplicitCollector(int n, int min, int max)
 	{
 		Random r = new Random();
-		
+
 		// NOTE: the ints() upper level bound is exclusive, which is why we have to add 1 when invoking it.
 		List<Integer> values = r.ints(n, min, max + 1)
 				.collect(ArrayList<Integer>::new, ArrayList::add, ArrayList::addAll);
@@ -187,7 +195,9 @@ public class Driver
 	}
 
 	/**
-	 * 1. Generate n random decimal numbers as a DoubleStream using built-in .doubles() feature of Random 2. Convert DoubleStream to doubles[] using DoubleStream.toArray()
+	 * 1. Generate n random decimal numbers as a DoubleStream using built-in .doubles() feature of Random
+	 * 
+	 * 2. Convert DoubleStream to doubles[] using DoubleStream.toArray()
 	 * 
 	 * @param n
 	 *            - the number of values to generate
@@ -205,6 +215,34 @@ public class Driver
 		// NOTE: Random.doubles() upper level bound is exclusive
 		double[] values = r.doubles(n, min, max)
 				.toArray();
+
+		return values;
+	}
+
+	/**
+	 * 1. Generate n random decimal numbers as a DoubleStream using built-in .doubles() feature of Random
+	 * 
+	 * 2. Convert DoubleSream to Stream<Double> using DoubleStream.boxed()
+	 * 
+	 * 3. Convert DoubleStream to Double[] using Stgream.toArray()
+	 * 
+	 * 
+	 * @param n
+	 *            - the number of values to generate
+	 * @param min
+	 *            - the minimum value to generate
+	 * @param max
+	 *            - the maximum value to generate
+	 * @return - an array of Double
+	 */
+	public static Double[] generateRandomBoxedDoubleArray(int n, double min, double max)
+	{
+		Random r = new Random();
+
+		// NOTE: Random.doubles() upper level bound is exclusive
+		Double[] values = r.doubles(n, min, max)
+				.boxed()
+				.toArray(Double[]::new);
 
 		return values;
 	}
