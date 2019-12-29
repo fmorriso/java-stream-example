@@ -68,6 +68,7 @@ public class Driver
 									.max(Comparator.naturalOrder()) //  -> Optional<Integer>
 									.get() // -> Integer
 									.intValue(); // int
+
 		smallestWholeNumber = values4	.stream()
 										.min(Comparator.naturalOrder()) //  -> Optional<Integer>
 										.get() // Integer
