@@ -60,11 +60,11 @@ public class Driver
 		System.out.format("3. smallest value = %d, largest value = %d%n", smallest, largest);
 		
 		// Get min/max in single pass using special built-in statistics class
-		IntSummaryStatistics temp4 = values3.stream()
-				                            .collect(IntSummaryStatistics::new, IntSummaryStatistics::accept, IntSummaryStatistics::combine);
-		smallest = temp4.getMin();
-		largest = temp4.getMax();
-		double average = temp4.getAverage();
+		IntSummaryStatistics stats3 = values3.stream()
+				                             .collect(IntSummaryStatistics::new, IntSummaryStatistics::accept, IntSummaryStatistics::combine);
+		smallest = stats3.getMin();
+		largest = stats3.getMax();
+		double average = stats3.getAverage();
 		System.out.format("4. smallest value = %d, largest value = %d, average = %.1f%n", smallest, largest, average);
 		
 		List<Integer> values4 = generateRandomIntegerListExplicitCollector(NUM_VALUES, MIN, MAX);
