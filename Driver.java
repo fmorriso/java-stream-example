@@ -91,26 +91,33 @@ public class Driver
 	 * 1. Generate n random whole numbers as an IntStream using built-in feature of Random
 	 * 2. Convert IntStream to int[] using IntStream.toArray()
 	 * 
-	 * @param size - the number of values to generate
+	 * @param n - the number of values to generate
 	 * @param min - the minimum value to generate
 	 * @param max - the maximum value to generate
 	 * @return - an array of integers
 	 */
-	public static int[] generateRandomIntArray(int size, int min, int max)
+	public static int[] generateRandomIntArray(int n, int min, int max)
 	{
 		Random r = new Random();
 		// NOTE: the ints() upper level bound is exclusive, which is why we have to add 1 when invoking it.
-		int[] values = r.ints(size, min, max + 1)
+		int[] values = r.ints(n, min, max + 1)
 				        .toArray();
 		return values;
 	}
 	
+	/**
+	 * 1. Generate n random whole numbers as an IntStream using built-in feature of Random
+	 * 2. convert the resulting IntStream to Stream<Integer> using boxed()
+	 * 3. convert the Stream<Integer> to Integer[]
+	 * 
+	 * @param n - the number of values to generate
+	 * @param min - the minimum value to generate
+	 * @param max - the maximum value to generate
+	 * @return - an array of Integers
+	 */
 	public static Integer[] generateRandomIntegerArray(int n, int min, int max) {
 		Random r = new Random();		
-		// 1. Generate n random whole numbers as an IntStream using built-in feature of Random
-		// 2. convert the resulting IntStream to Stream<Integer>
-		// 3. convert the Stream<Integer> to Integer[]
-		// IntStream -> Stream<Integer> -> Integer[];		
+		
 		Integer []values = r.ints(n, min, max + 1)
 				            .boxed()
 				            .toArray(Integer[]::new);
