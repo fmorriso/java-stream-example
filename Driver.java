@@ -64,7 +64,8 @@ public class Driver
 				                            .collect(IntSummaryStatistics::new, IntSummaryStatistics::accept, IntSummaryStatistics::combine);
 		smallest = temp4.getMin();
 		largest = temp4.getMax();
-		System.out.format("4. smallest value = %d, largest value = %d%n", smallest, largest);
+		double average = temp4.getAverage();
+		System.out.format("4. smallest value = %d, largest value = %d, average = %.1f%n", smallest, largest, average);
 		
 		List<Integer> values4 = generateRandomIntegerListExplicitCollector(NUM_VALUES, MIN, MAX);
 		System.out.println(values4);
