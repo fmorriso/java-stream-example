@@ -155,10 +155,12 @@ public class Driver
 	public static List<Integer> generateRandomIntegerList(int n, int min, int max)
 	{
 		Random r = new Random();
+
 		// NOTE: the ints() upper level bound is exclusive, which is why we have to add 1 when invoking it.
 		List<Integer> values = r.ints(n, min, max + 1)
 				.boxed()
 				.collect(Collectors.toList());
+
 		return values;
 	}
 
@@ -177,6 +179,7 @@ public class Driver
 	public static List<Integer> generateRandomIntegerListExplicitCollector(int n, int min, int max)
 	{
 		Random r = new Random();
+		
 		// NOTE: the ints() upper level bound is exclusive, which is why we have to add 1 when invoking it.
 		List<Integer> values = r.ints(n, min, max + 1)
 				.collect(ArrayList<Integer>::new, ArrayList::add, ArrayList::addAll);
