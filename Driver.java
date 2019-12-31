@@ -20,14 +20,14 @@ public class Driver
 		// System.out.println(Arrays.toString(values1));
 
 		// multiple passes over the same int array of values to find smallest and largest value
-		largestWholeNumber = Arrays.stream(primitiveIntArray)
-				                   .max()
-				                   .getAsInt();
-		
+		largestWholeNumber = Arrays	.stream(primitiveIntArray)
+									.max()
+									.getAsInt();
+
 		smallestWholeNumber = Arrays.stream(primitiveIntArray)
-				                    .min()
-				                    .getAsInt();
-		
+									.min()
+									.getAsInt();
+
 		System.out.format("1. smallest value = %d, largest value = %d%n", smallestWholeNumber, largestWholeNumber);
 
 		// generate Integer[] array so we can use Stream and Tee in a single (logical) pass over it.
